@@ -12,6 +12,23 @@ const io = new Server(server, {
 });
 
 const users = new Map();
+const channels = new Map();
+
+channels.set("Général", {
+  members: new Set(),
+  messages: [],
+  creator: null,
+});
+channels.set("Philosophie", {
+  members: new Set(),
+  messages: [],
+  creator: null,
+});
+channels.set("Technologie", {
+  members: new Set(),
+  messages: [],
+  creator: null,
+});
 
 app.use(express.static("public"));
 
