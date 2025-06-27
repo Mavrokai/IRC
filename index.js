@@ -12,9 +12,11 @@ const io = new Server(server, {
   },
 });
 
+const users = new Map();
+
 app.use(express.static("public"));
 
-const PORT = process.env.PORT || 3000;
+const PORT = 3000;
 
 server.listen(PORT, () => {
   console.log(`Serveur démarré sur le port ${PORT}`);
