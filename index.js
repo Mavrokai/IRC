@@ -1,0 +1,12 @@
+const express = require("express");
+const app = express();
+const http = require("http");
+const server = http.createServer(app);
+
+app.use(express.static("public"));
+
+const PORT = 3000;
+
+server.listen(PORT, () => {
+  console.log(`Serveur démarré sur le port ${PORT}`);
+});
