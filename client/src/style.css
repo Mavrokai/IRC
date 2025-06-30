@@ -1,0 +1,23 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+}
+
+.layout-discord {
+  display: flex;
+  height: 100vh;
+}
+
+.sidebar {
+  width: 250px;
+  background-color: #2f3136;
+  color: white;
+  padding: 20px;
+}
+
+.chat-center {
+  flex: 1;
+  background-color: #36393f;
+  color: white;
+}
