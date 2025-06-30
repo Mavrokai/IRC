@@ -64,6 +64,42 @@ io.on("connection", (socket) => {
       console.log(`${user.login} s'est déconnecté`);
     }
   });
+
+  socket.on("joinChannel", (channelName) => {
+    const user = users.get(socket.id);
+    if (!user) return;
+
+    let channel = channels.get(channelName);
+    if (!channel) {
+      channel = { members: new Set(), messages: [], creator: user.login };
+      channels.set(channelName, channel);
+    }
+
+    channel.members.add(socket.id);
+    user.channels.add(channelName);
+
+    socket.join(channelName);
+
+    socket.to(channelName).emit("userJoinedChannel", channelName, user.login);
+
+    console.log(`${user.login} a rejoint ${channelName}`);
+  });
+
+  socket.on("leaveChannel", (channelName) => {
+    const user = users.get(socket.id);
+    if (!user) return;
+
+    const channel = channels.get(channelName);
+    if (channel) {
+      channel.members.delete(socket.id);
+      user.channels.delete(channelName);
+      socket.leave(channelName);
+
+      socket.to(channelName).emit("userLeftChannel", channelName, user.login);
+    }
+
+    console.log(`${user.login} a quitté ${channelName}`);
+  });
 });
 
 function getOnlineUsers() {
