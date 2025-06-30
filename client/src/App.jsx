@@ -1,16 +1,17 @@
 import React, { useState } from "react";
+import LoginModal from "./components/LoginModal.jsx";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [login, setLogin] = useState("");
 
+  const handleLogin = (pseudo) => {
+    setLogin(pseudo);
+    setIsLoggedIn(true);
+  };
+
   if (!isLoggedIn) {
-    return (
-      <div>
-        <h1>Chat IRC</h1>
-        <p>Veuillez vous connecter</p>
-      </div>
-    );
+    return <LoginModal onLogin={handleLogin} />;
   }
 
   return (
