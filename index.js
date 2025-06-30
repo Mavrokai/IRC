@@ -100,10 +100,66 @@ io.on("connection", (socket) => {
 
     console.log(`${user.login} a quitté ${channelName}`);
   });
+
+  socket.on("createChannel", (channelName) => {
+    const user = users.get(socket.id);
+    if (!user) return;
+
+    if (channels.has(channelName)) {
+      socket.emit("channelError", "Ce channel existe déjà");
+      return;
+    }
+
+    channels.set(channelName, {
+      members: new Set([socket.id]),
+      messages: [],
+      creator: user.login,
+    });
+    user.channels.add(channelName);
+    socket.join(channelName);
+
+    io.emit("channelsList", getChannelsList());
+    io.emit("channelCreated", channelName, user.login);
+
+    console.log(`${user.login} a créé le channel ${channelName}`);
+  });
+
+  socket.on("deleteChannel", (channelName) => {
+    const user = users.get(socket.id);
+    if (!user) return;
+
+    const channel = channels.get(channelName);
+    if (!channel) return;
+
+    if (channel.creator !== user.login) {
+      socket.emit("channelError", "Vous n'êtes pas le créateur de ce channel");
+      return;
+    }
+
+    channel.members.forEach((socketId) => {
+      const member = users.get(socketId);
+      if (member) {
+        member.channels.delete(channelName);
+      }
+    });
+
+    channels.delete(channelName);
+    io.emit("channelsList", getChannelsList());
+    io.emit("channelDeleted", channelName, user.login);
+
+    console.log(`${user.login} a supprimé le channel ${channelName}`);
+  });
 });
 
 function getOnlineUsers() {
   return Array.from(users.values()).map((user) => user.login);
+}
+
+function getChannelsList() {
+  return Array.from(channels.entries()).map(([name, data]) => ({
+    name,
+    creator: data.creator,
+  }));
 }
 
 const PORT = 3000;
