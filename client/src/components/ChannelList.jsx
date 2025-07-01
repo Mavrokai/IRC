@@ -47,6 +47,7 @@ export default function ChannelList({
                   "channels-joined-item" +
                   (c.name === currentChannel ? " active" : "")
                 }
+
               >
                 {c.name}
               </li>
@@ -74,6 +75,7 @@ export default function ChannelList({
                     value={renameValue}
                     onChange={(e) => setRenameValue(e.target.value)}
                     className="channel-rename-input"
+
                   />
                   <button
                     className="btn-small btn-primary"
@@ -105,11 +107,13 @@ export default function ChannelList({
                     </span>
                   )}
                   <span className="channel-creator">
+
                     {channel.creator ? `(créé par ${channel.creator})` : ""}
                   </span>
                 </>
               )}
               <div className="channel-actions-wrapper">
+
                 {!isMember ? (
                   <button
                     className="btn-small btn-join"
@@ -128,6 +132,7 @@ export default function ChannelList({
                         )
                       }
                       aria-label="Actions channel"
+
                     >
                       ⋮
                     </button>
@@ -135,6 +140,7 @@ export default function ChannelList({
                       <ul
                         className="dropdown-menu channel-dropdown-menu"
                         ref={dropdownRef}
+
                       >
                         <li>
                           <button
@@ -143,6 +149,7 @@ export default function ChannelList({
                               onLeave(channel.name);
                               setDropdownOpen(null);
                             }}
+
                           >
                             Quitter
                           </button>
@@ -156,6 +163,7 @@ export default function ChannelList({
                                   onDelete(channel.name);
                                   setDropdownOpen(null);
                                 }}
+
                               >
                                 Supprimer
                               </button>
@@ -168,6 +176,7 @@ export default function ChannelList({
                                   setRenameValue(channel.name);
                                   setDropdownOpen(null);
                                 }}
+
                               >
                                 Modifier
                               </button>
@@ -204,3 +213,4 @@ export default function ChannelList({
     </>
   );
 }
+
