@@ -36,16 +36,18 @@ export default function ChannelList({
 
   return (
     <>
-      <div style={{ marginBottom: 10, fontSize: "0.95rem", color: "#ff6961" }}>
+      <div className="channels-joined">
         <b>Channels rejoints :</b>
         {joinedChannels.length > 0 ? (
-          <ul style={{ margin: 0, paddingLeft: 18 }}>
+          <ul className="channels-joined-list">
             {joinedChannels.map((c) => (
               <li
                 key={"joined-" + c.name}
-                style={{
-                  fontWeight: c.name === currentChannel ? "bold" : "normal",
-                }}
+                className={
+                  "channels-joined-item" +
+                  (c.name === currentChannel ? " active" : "")
+                }
+
               >
                 {c.name}
               </li>
@@ -72,7 +74,8 @@ export default function ChannelList({
                   <input
                     value={renameValue}
                     onChange={(e) => setRenameValue(e.target.value)}
-                    style={{ marginRight: 8 }}
+                    className="channel-rename-input"
+
                   />
                   <button
                     className="btn-small btn-primary"
@@ -92,38 +95,25 @@ export default function ChannelList({
                 </>
               ) : (
                 <>
-                  <span onClick={() => onJoin(channel.name)}>
+                  <span
+                    className="channel-name"
+                    onClick={() => onJoin(channel.name)}
+                  >
                     {channel.name}
                   </span>
                   {unreadCounts[channel.name] > 0 && (
-                    <span
-                      style={{
-                        background: "#ff6961",
-                        color: "#fff",
-                        borderRadius: 12,
-                        padding: "2px 8px",
-                        fontSize: "0.85em",
-                        marginLeft: 8,
-                        fontWeight: "bold",
-                        boxShadow: "1px 2px 0 #b2f7ef",
-                        verticalAlign: "middle",
-                      }}
-                    >
+                    <span className="unread-badge">
                       {unreadCounts[channel.name]}
                     </span>
                   )}
-                  <span
-                    style={{
-                      fontSize: "0.8em",
-                      color: "#b2b2b2",
-                      marginLeft: 8,
-                    }}
-                  >
+                  <span className="channel-creator">
+
                     {channel.creator ? `(créé par ${channel.creator})` : ""}
                   </span>
                 </>
               )}
-              <div className="channel-actions" style={{ position: "relative" }}>
+              <div className="channel-actions-wrapper">
+
                 {!isMember ? (
                   <button
                     className="btn-small btn-join"
@@ -142,28 +132,15 @@ export default function ChannelList({
                         )
                       }
                       aria-label="Actions channel"
-                      style={{ fontSize: 20, padding: "2px 10px" }}
+
                     >
                       ⋮
                     </button>
                     {dropdownOpen === channel.name && (
                       <ul
-                        className="dropdown-menu"
+                        className="dropdown-menu channel-dropdown-menu"
                         ref={dropdownRef}
-                        style={{
-                          position: "absolute",
-                          top: 32,
-                          right: 0,
-                          background: "#fffbe7",
-                          border: "2px solid #ffb347",
-                          borderRadius: 10,
-                          boxShadow: "2px 4px 0 #b2f7ef",
-                          zIndex: 20,
-                          listStyle: "none",
-                          margin: 0,
-                          padding: "6px 0",
-                          minWidth: 120,
-                        }}
+
                       >
                         <li>
                           <button
@@ -172,7 +149,7 @@ export default function ChannelList({
                               onLeave(channel.name);
                               setDropdownOpen(null);
                             }}
-                            style={{ width: "100%", textAlign: "left" }}
+
                           >
                             Quitter
                           </button>
@@ -186,7 +163,7 @@ export default function ChannelList({
                                   onDelete(channel.name);
                                   setDropdownOpen(null);
                                 }}
-                                style={{ width: "100%", textAlign: "left" }}
+
                               >
                                 Supprimer
                               </button>
@@ -199,7 +176,7 @@ export default function ChannelList({
                                   setRenameValue(channel.name);
                                   setDropdownOpen(null);
                                 }}
-                                style={{ width: "100%", textAlign: "left" }}
+
                               >
                                 Modifier
                               </button>
@@ -236,3 +213,4 @@ export default function ChannelList({
     </>
   );
 }
+
