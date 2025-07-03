@@ -11,9 +11,8 @@ export default function ChatWindow({ messages }) {
   return (
     <div className="messages-container" ref={containerRef}>
       {messages.map((msg, i) => {
-        // Vérifier que le message a une structure valide
         if (!msg || typeof msg !== "object" || !msg.message) {
-          return null; // Ignorer les messages invalides
+          return null;
         }
 
         return (
@@ -25,7 +24,6 @@ export default function ChatWindow({ messages }) {
             }
             style={{ display: "flex", alignItems: "flex-start", gap: 12 }}
           >
-            {/* Avatar */}
             {msg.avatar && !msg.system ? (
               <img
                 src={msg.avatar}
