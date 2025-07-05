@@ -77,6 +77,22 @@ export default function MessageInput({ onSend, disabled }) {
       } else if (e.key === "Escape") {
         setShowSuggestions(false);
       }
+    } else {
+      if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
+        if (message.trim()) {
+          if (message.trim().startsWith("/")) {
+            const parts = message.trim().slice(1).split(" ");
+            const command = parts[0];
+            const args = parts.slice(1);
+            onSend({ command, args });
+          } else {
+            onSend(message.trim());
+          }
+          setMessage("");
+          setShowSuggestions(false);
+        }
+      }
     }
   };
 
@@ -103,34 +119,13 @@ export default function MessageInput({ onSend, disabled }) {
         </button>
       </form>
       {showSuggestions && (
-        <ul
-          style={{
-            position: "absolute",
-            left: 0,
-            bottom: "56px",
-            background: "#fffbe7",
-            border: "2px solid #ffb347",
-            borderRadius: 10,
-            boxShadow: "2px 4px 0 #b2f7ef",
-            zIndex: 10,
-            listStyle: "none",
-            margin: 0,
-            padding: "6px 0",
-            minWidth: 180,
-            fontFamily: "Fredoka One, cursive",
-          }}
-        >
+        <ul className="command-suggestions">
           {filteredCommands.map((cmd, i) => (
             <li
               key={cmd}
-              style={{
-                padding: "6px 18px",
-                background: i === selectedIndex ? "#ffb347" : "#fffbe7",
-                color: i === selectedIndex ? "#fffbe7" : "#ff6961",
-                cursor: "pointer",
-                fontWeight: i === selectedIndex ? "bold" : "normal",
-                borderRadius: 8,
-              }}
+              className={`command-suggestion-item ${
+                i === selectedIndex ? "selected" : ""
+              }`}
               onMouseDown={() => {
                 setMessage(cmd + " ");
                 setShowSuggestions(false);
