@@ -17,78 +17,41 @@ export default function ProfileModal({ login, avatar, onClose, onSave }) {
   };
 
   return (
-    <div
-      style={{
-        position: "fixed",
-        top: 0,
-        left: 0,
-        width: "100vw",
-        height: "100vh",
-        background: "rgba(0,0,0,0.3)",
-        zIndex: 2000,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      <div
-        style={{
-          background: "#fffbe7",
-          borderRadius: 20,
-          padding: 32,
-          minWidth: 320,
-          boxShadow: "0 8px 32px #0002",
-        }}
-      >
-        <h2 style={{ textAlign: "center", color: "#ff6961" }}>
-          Modifier le profil
-        </h2>
-        <div style={{ textAlign: "center", marginBottom: 16 }}>
+    <div className="profile-modal-overlay">
+      <div className="profile-modal">
+        <h2>Modifier le profil</h2>
+        <div className="profile-avatar-container">
           <img
             src={
               newAvatar ||
               "https://api.dicebear.com/7.x/bottts/svg?seed=" + newLogin
             }
             alt="avatar"
-            style={{
-              width: 80,
-              height: 80,
-              borderRadius: "50%",
-              border: "2px solid #b2f7ef",
-              objectFit: "cover",
-            }}
+            className="profile-avatar"
           />
         </div>
         <input
           type="file"
           accept="image/*"
-          style={{ display: "none" }}
+          className="profile-avatar-input"
           ref={fileInput}
           onChange={handleAvatarChange}
         />
         <button
-          className="btn"
+          className="btn btn-primary"
           onClick={() => fileInput.current.click()}
-          style={{ marginBottom: 16 }}
         >
           Modifier l'avatar
         </button>
-        <div style={{ marginBottom: 16 }}>
-          <label style={{ fontWeight: "bold", color: "#ff6961" }}>
-            Pseudo&nbsp;:
-          </label>
+        <div className="profile-form-group">
+          <label className="profile-label">Pseudo :</label>
           <input
+            className="profile-input"
             value={newLogin}
             onChange={(e) => setNewLogin(e.target.value)}
-            style={{
-              marginLeft: 8,
-              padding: 6,
-              borderRadius: 8,
-              border: "1px solid #b2f7ef",
-            }}
           />
         </div>
-        <div style={{ display: "flex", justifyContent: "center", gap: 16 }}>
+        <div className="profile-actions">
           <button
             className="btn btn-primary"
             onClick={() => onSave(newLogin, newAvatar)}

@@ -16,35 +16,19 @@ export default function ProfileSection({
   };
 
   return (
-    <div style={{ marginBottom: 24, textAlign: "center" }}>
-      <div style={{ marginBottom: 8 }}>
-        <img
-          src={
-            avatar || "https://api.dicebear.com/7.x/bottts/svg?seed=" + login
-          }
-          alt="avatar"
-          style={{
-            width: 64,
-            height: 64,
-            borderRadius: "50%",
-            border: "2px solid #b2f7ef",
-            objectFit: "cover",
-          }}
-        />
-      </div>
-      <button
-        className="btn"
-        onClick={() => setModalOpen(true)}
-        style={{ marginBottom: 8 }}
-      >
+    <div className="profile-section">
+      <img
+        src={avatar || "https://api.dicebear.com/7.x/bottts/svg?seed=" + login}
+        alt="avatar"
+        className="profile-section-avatar"
+      />
+      <button className="btn btn-primary" onClick={() => setModalOpen(true)}>
         <span role="img" aria-label="edit">
           ✏️
         </span>{" "}
         Editer le profil
       </button>
-      <div>
-        <span style={{ fontWeight: "bold", fontSize: "1.1em" }}>{login}</span>
-      </div>
+      <span className="profile-section-username">{login}</span>
       {modalOpen && (
         <ProfileModal
           login={login}

@@ -22,7 +22,7 @@ export default function ChatHeader({
         </div>
       </div>
       {selectedPrivate && (
-        <button className="btn" onClick={onBack} style={{ marginLeft: 16 }}>
+        <button className="btn btn-primary" onClick={onBack}>
           Revenir au channel
         </button>
       )}

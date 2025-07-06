@@ -25,18 +25,7 @@ export default function ChatWindow({ messages }) {
             style={{ display: "flex", alignItems: "flex-start", gap: 12 }}
           >
             {msg.avatar && !msg.system ? (
-              <img
-                src={msg.avatar}
-                alt="avatar"
-                style={{
-                  width: 36,
-                  height: 36,
-                  borderRadius: "50%",
-                  border: "2px solid #b2f7ef",
-                  objectFit: "cover",
-                  marginRight: 8,
-                }}
-              />
+              <img src={msg.avatar} alt="avatar" className="message-avatar" />
             ) : (
               !msg.system && (
                 <img
@@ -45,14 +34,7 @@ export default function ChatWindow({ messages }) {
                     (msg.user || msg.from || "user")
                   }
                   alt="avatar"
-                  style={{
-                    width: 36,
-                    height: 36,
-                    borderRadius: "50%",
-                    border: "2px solid #b2f7ef",
-                    objectFit: "cover",
-                    marginRight: 8,
-                  }}
+                  className="message-avatar"
                 />
               )
             )}
